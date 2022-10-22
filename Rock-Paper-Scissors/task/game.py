@@ -5,9 +5,8 @@ import math
 class Person:
     def __init__(self):
         self.name = input('Enter your name: ')
-        self.greeting()
         self.score = self.read_scores()
-        self.options = self.read_options()
+        self.options = None
 
     def __str__(self):
         return f'Name : {self.name} \nScore: {self.score}'
@@ -26,13 +25,13 @@ class Person:
                     return int(score[1])
         return 0
 
-    @staticmethod
-    def read_options():
-        read = input()
+
+    def read_options(self):
+        read = input('Input the list of options you wanna play separated by comma (e.g. > rock,sccisors,paper,spock, sun): ')
         if read != '':
-            return read.split(',')
+            self.options = read.split(',')
         else:
-            return ['rock', 'paper', 'scissors']
+            self.options=['rock', 'paper', 'scissors']
 
 
 class RockPaperScissors:
@@ -55,15 +54,16 @@ class RockPaperScissors:
             print(f"There is a draw ({self.computer_option})")
             return 50
         elif computer_index in indexes_beaten_by_user:
-            print(f"Sorry, but the computer chose {self.computer_option}")
+            print(f"Sorry, you lost. The computer chose {self.computer_option}.")
             return 0
         else:
-            print(f"Well done. The computer chose {self.computer_option} and failed")
+            print(f"Well done, you win. The computer chose {self.computer_option} and failed.")
             return 100
 
     def check_input(self):
+        print(self.options_provided)
         while True:
-            option = input()
+            option = input('Enter your option: ')
 
             if option in self.options_provided:
                 return option
@@ -83,6 +83,8 @@ class RockPaperScissors:
 def main():
 
     paulina = Person()
+    paulina.greeting()
+    paulina.read_options()
     print("Okay, let's start")
 
     while True:
